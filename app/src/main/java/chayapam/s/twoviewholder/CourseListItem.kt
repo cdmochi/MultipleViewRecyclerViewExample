@@ -8,4 +8,6 @@ class CourseListItem : ListItem() {
     override fun getType(): Int {
         return ListItem.TYPE_COURSE
     }
+
+
 }

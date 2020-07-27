@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.course_itemview.view.*
 import kotlinx.android.synthetic.main.semester_itemview.view.*
+import org.w3c.dom.Text
 
 // specify the inner class's ViewHolder as Parent's Class
 class Adapter(var consolidatedList : ArrayList<ListItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,6 +20,7 @@ class Adapter(var consolidatedList : ArrayList<ListItem>) : RecyclerView.Adapter
 
     inner class SemesterViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val header : TextView = itemView.ui_header_textview
+        val totalCredit : TextView = itemView.ui_total_credit_tv
 
     }
 
@@ -72,7 +74,9 @@ class Adapter(var consolidatedList : ArrayList<ListItem>) : RecyclerView.Adapter
                 val semester: SemesterListItem = consolidatedList[position] as SemesterListItem
                 val semesterViewHolder: SemesterViewHolder = holder as SemesterViewHolder
                 semesterViewHolder.header.text = semester.header
+                semesterViewHolder.totalCredit.text = semester.creditTaken.toString() + " CREDITS"
                 headerPosition = position
+
 
 
             }

@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         val courseRegisteredHashMap= groupDataToHashMap(rawData)
 
+
         // Add To Linear ArrayList
         for (semesterKey in courseRegisteredHashMap.keys){
             var newSemester : SemesterListItem = SemesterListItem()
@@ -86,6 +87,15 @@ class MainActivity : AppCompatActivity() {
                 val newCourseTaken : CourseListItem = CourseListItem()
                 newCourseTaken.courseRegistered = courseValue
                 consolidatedList.add(newCourseTaken)
+            }
+        }
+
+        //calculate totalCreditForSemeseter
+        for (sem in consolidatedList) {
+            if (sem.getType()==ListItem.TYPE_SEMESTER) {
+                val sem = sem as SemesterListItem
+                val totalCredit = findTotalCreditTaken(sem.header,courseRegisteredHashMap)
+                sem.creditTaken = totalCredit
             }
         }
 
@@ -102,7 +112,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // convert the List to the Hashmap
+    // find the key's Array and count CreditTaken after the HashTable -> ArrayList
+    private fun findTotalCreditTaken(targetKey : String,map : MutableMap<String,ArrayList<CourseRegistered>>) : Int{
+        var count = 0
+        for (i in map.getValue(targetKey)) {
+           count += i.creditAmount
+        }
+        return count
+    }
+
+    // convert the List to the Hashmap with String, Array<POJO>
     private fun groupDataToHashMap(courseRegisteredList : List<CourseRegistered>)
             : MutableMap<String, ArrayList<CourseRegistered>> {
 
